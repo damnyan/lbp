@@ -1,0 +1,26 @@
+{
+    "name": "dmn/lbp",
+    "autoload": {
+        "psr-4": {
+            "Dmn\\Lbp\\": "src/"
+        }
+    },
+    "require": {
+        "php": "^8.0"
+    },
+    "authors": [
+        {
+            "name": "dc",
+            "email": "damnyan@gmail.com"
+        }
+    ],
+    "psr-4": {
+        "Dmn\\Lbp": "src/"
+    },
+    "autoload-dev": {
+        "Tests": "tests/"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.6"
+    }
+}
