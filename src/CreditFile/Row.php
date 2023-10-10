@@ -15,6 +15,12 @@ class Row
 {
     protected string|null $creditInstruction = null;
 
+    protected int $recordHash = 0;
+
+    protected int $cumulativeHash = 0;
+
+    protected int $previousCumulativeHash = 0;
+
     public string $agencyReferenceNumber;
 
     public string $transactionType;
@@ -67,7 +73,9 @@ class Row
     public string|null $details4 = null;
     public string|null $details5 = null;
 
-    protected $row = [];
+    protected array $csvRow = [];
+
+    protected array $row = [];
 
     public function __construct()
     {
@@ -91,6 +99,19 @@ class Row
     }
 
     /**
+     * Compute
+     *
+     * @return void
+     */
+    public function compute(): void
+    {
+        $this->generateCreditInstruction();
+        $this->generateRecordHash();
+        $this->generateCumulativeHash();
+        $this->generateCsvRow();
+    }
+
+    /**
      * Get credit instruction
      *
      * @return string
@@ -105,11 +126,74 @@ class Row
     }
 
     /**
+     * Generate record hash
+     *
+     * @return void
+     */
+    protected function generateRecordHash(): void
+    {
+        $this->recordHash = ($this->transactionAmount * 100)
+            * (
+                (int) substr($this->sourceAccountNumber, strlen($this->sourceAccountNumber) - 6)
+                + (int) substr($this->receiversAccountNumber, strlen($this->receiversAccountNumber) -6)
+            );
+    }
+
+    /**
+     * Generate cumulative Hash
+     *
+     * @return void
+     */
+    protected function generateCumulativeHash(): void
+    {
+        $this->cumulativeHash = $this->getRecordHash() + $this->previousCumulativeHash;
+    }
+
+    /**
+     * Get record hash
+     *
+     * @return string
+     */
+    public function getRecordHash(): string
+    {
+        if (empty($this->recordHash)) {
+            $this->generateRecordHash();
+        }
+
+        return $this->recordHash;
+    }
+
+    /**
+     * Get cumulative hash
+     *
+     * @return integer
+     */
+    public function getCumulativeHash(): int
+    {
+        if (empty($this->cumulativeHash)) {
+            $this->generateCumulativeHash();
+        }
+
+        return $this->cumulativeHash;
+    }
+
+    /**
+     * Set previous cumulative has
+     *
+     * @param integer $cumulativeHash
+     * @return void
+     */
+    public function setPreviousCumulativeHash(int $cumulativeHash): void
+    {
+        $this->previousCumulativeHash = $cumulativeHash;
+    }
+
+    /**
      * Generate Credit Instrauction
      *
      * @return void
      */
-    public function generateCreditInstruction(): void
+    protected function generateCreditInstruction(): void
     {
         $this->row = [
             'agency_reference_number' => $this->agencyReferenceNumber,
@@ -151,5 +235,48 @@ class Row
         ];
 
         $this->creditInstruction = implode('|', $this->row);
+    }
+
+    /**
+     * Generate generate csv row
+     *
+     * @return void
+     */
+    protected function generateCsvRow(): void
+    {
+        $this->csvRow = array_merge(
+            [
+                'creditInstruction' => $this->getCreditInstruction(),
+                'B' => null,
+                'record_hash' => $this->getRecordHash(),
+                'cumulative_hash' => $this->getCumulativeHash(),
+                'E' => null,
+            ],
+            $this->row
+        );
+    }
+
+    /**
+     * Get CSV row
+     *
+     * @return array
+     */
+    public function getCsvRow(): array
+    {
+        if (empty($this->csvRow)) {
+            $this->generateCsvRow();
+        }
+
+        return $this->csvRow;
+    }
+
+    /**
+     * Transaction amount
+     *
+     * @return float
+     */
+    public function getTransactionAmount(): float
+    {
+        return $this->transactionAmount;
     }
 }
