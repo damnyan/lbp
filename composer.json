@@ -5,6 +5,8 @@
             "Dmn\\Lbp\\": "src/"
         }
     },
+    "description": "Package for LBP",
+    "license": "MIT",
     "require": {
         "php": "^8.0"
     },
@@ -14,9 +16,6 @@
             "email": "damnyan@gmail.com"
         }
     ],
-    "psr-4": {
-        "Dmn\\Lbp": "src/"
-    },
     "autoload-dev": {
         "Tests": "tests/"
     },
