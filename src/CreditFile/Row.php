@@ -233,8 +233,6 @@ class Row
             'details4' => $this->details4 ?? 'null',
             'details5' => $this->details5 ?? 'null',
         ];
-
-        $this->creditInstruction = implode('|', $this->row);
     }
 
     /**
@@ -244,16 +242,7 @@ class Row
      */
     protected function generateCsvRow(): void
     {
-        $this->csvRow = array_merge(
-            [
-                'creditInstruction' => $this->getCreditInstruction(),
-                'B' => null,
-                'record_hash' => $this->getRecordHash(),
-                'cumulative_hash' => $this->getCumulativeHash(),
-                'E' => null,
-            ],
-            $this->row
-        );
+        $this->csvRow = $this->row;
     }
 
     /**

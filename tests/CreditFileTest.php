@@ -98,10 +98,8 @@ class CreditFileTest extends TestCase
      */
     public function rowClass(): void
     {
-        $creditInstruction = 'LBPT001722444438|01|20230518|073000|LP|1|035|8656003520|0276000055|||102.18|LANDBANK|LBP||Makati City|JANE1|JANE|LBCS|Pedro Gil|Manila City|Metro Manila|LBP|PHP|galasanayjane2@gmail.com|I|null|null|null|null|null|null';
         $row = $this->generateRow1();
         $this->assertEquals(36529350, $row->getCumulativeHash());
-        $this->assertEquals($creditInstruction, $row->getCreditInstruction());
         $this->assertIsArray($row->getCsvRow());
 
         $row = $this->generateRow1();
@@ -112,8 +110,6 @@ class CreditFileTest extends TestCase
         $row->setPreviousCumulativeHash(1);
         $row->compute();
         $this->assertEquals(36529351, $row->getCumulativeHash());
-
-        $this->assertEquals($creditInstruction, $row->getCreditInstruction());
     }
 
     /**

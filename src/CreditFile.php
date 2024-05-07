@@ -21,6 +21,8 @@ class CreditFile
     protected string|null $rawFilePath = null;
     protected string|null $zipFilePath = null;
 
+    protected string $separator = '|';
+
     /**
      * Construct
      *
@@ -128,70 +130,69 @@ class CreditFile
     /**
      * Footer value
      *
-     * @return string
+     * @return array
      */
-    protected function footerValue(): string
+    protected function footerValue(): array
     {
-        return implode('|', [
+        return [
             $this->rowCount,
             $this->totalTransactionAmount,
             $this->recordHash
-        ]);
+        ];
     }
 
     protected function headers(): array
     {
         return [
-            [], [], [
-                'Credit File Rows',
-                null,
-                'Record Hash',
-                'Cumulative Hash',
-                null,
-                'Agency Reference Number',
-                'Transaction Type',
-                'Transaction Date',
-                'Transaction Time',
-                'Settlement Type',
-                'Target Crediting App',
-                'Dest Bank Code',
-                'Source Account Number',
-                'Receiver\'s Account Number',
-                'Merchant Biller Code',
-                'Merchant Reference Number',
-                'Transaction Amount',
-                'Remitter\'s Name',
-                'Remitter\'s First Name',
-                'Remitter\'s Middle Name',
-                'Remitter\'s Address',
-                'Receiver\'s Name',
-                'Receiver\'s First Name',
-                'Receiver\'s Middle Name',
-                'Receiver\'s Address - Bldg/House No, Street, Barangay',
-                'Receiver\'s Address - Town, District, City',
-                'Receiver\'s Address - State/Province',
-                'Organization Code',
-                'Currency',
-                'Email Address',
-                'Customer Type',
-                'Remarks',
-            ],
+            [$this->batchNumber()], [],
+            // [
+                // 'Credit File Rows',
+                // null,
+                // 'Record Hash',
+                // 'Cumulative Hash',
+                // null,
+                // 'Agency Reference Number',
+                // 'Transaction Type',
+                // 'Transaction Date',
+                // 'Transaction Time',
+                // 'Settlement Type',
+                // 'Target Crediting App',
+                // 'Dest Bank Code',
+                // 'Source Account Number',
+                // 'Receiver\'s Account Number',
+                // 'Merchant Biller Code',
+                // 'Merchant Reference Number',
+                // 'Transaction Amount',
+                // 'Remitter\'s Name',
+                // 'Remitter\'s First Name',
+                // 'Remitter\'s Middle Name',
+                // 'Remitter\'s Address',
+                // 'Receiver\'s Name',
+                // 'Receiver\'s First Name',
+                // 'Receiver\'s Middle Name',
+                // 'Receiver\'s Address - Bldg/House No, Street, Barangay',
+                // 'Receiver\'s Address - Town, District, City',
+                // 'Receiver\'s Address - State/Province',
+                // 'Organization Code',
+                // 'Currency',
+                // 'Email Address',
+                // 'Customer Type',
+                // 'Remarks',
+            // ],
         ];
     }
 
     /**
-     * File name
+     * batchNumber
      *
      * @return string
      */
-    protected function filename(): string
+    protected function batchNumber(): string
     {
-        $filename = $this->agencyCode
+        return $this->agencyCode
             . '_'
             . $this->date->format('Ymd')
             . str_pad($this->sequenceNumber, 6, '0', STR_PAD_LEFT);
-
-        return $filename;
     }
 
     /**
@@ -201,7 +202,7 @@ class CreditFile
      */
     public function generate(): string
     {
-        $filename = $this->filename();
+        $filename = $this->batchNumber();
         $this->rawFilePath = $this->path . $filename . '.txt';
         $this->zipFilePath = $this->path . $filename . '.zip';
 
@@ -210,10 +211,10 @@ class CreditFile
         $this->addHeaders($f);
         foreach ($this->rows as $row) {
             /** @var \Dmn\Lbp\CreditFile\Row $row */
-            fputcsv($f, $row->getCsvRow());
+            fputcsv($f, $row->getCsvRow(), $this->separator);
         }
 
-        fputcsv($f, [null, null, $this->recordHash]);
+        fputcsv($f, [null, null, $this->recordHash], $this->separator);
 
         $this->addFooter($f);
 
@@ -249,7 +250,7 @@ class CreditFile
     protected function addHeaders(&$f): void
     {
         foreach ($this->headers() as $header) {
-            fputcsv($f, $header);
+            fputcsv($f, $header, $this->separator);
         }
     }
 
@@ -261,8 +262,7 @@ class CreditFile
      */
     protected function addFooter(&$f): void
     {
-        fputcsv($f, [null]);
-        fputcsv($f, ['Footer Record']);
-        fputcsv($f, [$this->footerValue()]);
+        fputcsv($f, [null], $this->separator);
+        fputcsv($f, $this->footerValue(), $this->separator);
     }
 }
