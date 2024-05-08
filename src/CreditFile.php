@@ -144,7 +144,7 @@ class CreditFile
     protected function headers(): array
     {
         return [
-            [$this->batchNumber()], [],
+            [$this->batchNumber()],
             // [
                 // 'Credit File Rows',
                 // null,
@@ -214,7 +214,7 @@ class CreditFile
             fputcsv($f, $row->getCsvRow(), $this->separator);
         }
 
-        fputcsv($f, [null, null, $this->recordHash], $this->separator);
+        // fputcsv($f, [null, null, $this->recordHash], $this->separator);
 
         $this->addFooter($f);
 
@@ -262,7 +262,7 @@ class CreditFile
      */
     protected function addFooter(&$f): void
     {
-        fputcsv($f, [null], $this->separator);
+        // fputcsv($f, [null], $this->separator);
         fputcsv($f, $this->footerValue(), $this->separator);
     }
 }

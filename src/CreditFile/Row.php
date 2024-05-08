@@ -112,20 +112,6 @@ class Row
     }
 
     /**
-     * Get credit instruction
-     *
-     * @return string
-     */
-    public function getCreditInstruction(): string|null
-    {
-        if (is_null($this->creditInstruction)) {
-            $this->generateCreditInstruction();
-        }
-
-        return $this->creditInstruction;
-    }
-
-    /**
      * Generate record hash
      *
      * @return void
