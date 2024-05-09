@@ -143,43 +143,7 @@ class CreditFile
 
     protected function headers(): array
     {
-        return [
-            [$this->batchNumber()],
-            // [
-                // 'Credit File Rows',
-                // null,
-                // 'Record Hash',
-                // 'Cumulative Hash',
-                // null,
-                // 'Agency Reference Number',
-                // 'Transaction Type',
-                // 'Transaction Date',
-                // 'Transaction Time',
-                // 'Settlement Type',
-                // 'Target Crediting App',
-                // 'Dest Bank Code',
-                // 'Source Account Number',
-                // 'Receiver\'s Account Number',
-                // 'Merchant Biller Code',
-                // 'Merchant Reference Number',
-                // 'Transaction Amount',
-                // 'Remitter\'s Name',
-                // 'Remitter\'s First Name',
-                // 'Remitter\'s Middle Name',
-                // 'Remitter\'s Address',
-                // 'Receiver\'s Name',
-                // 'Receiver\'s First Name',
-                // 'Receiver\'s Middle Name',
-                // 'Receiver\'s Address - Bldg/House No, Street, Barangay',
-                // 'Receiver\'s Address - Town, District, City',
-                // 'Receiver\'s Address - State/Province',
-                // 'Organization Code',
-                // 'Currency',
-                // 'Email Address',
-                // 'Customer Type',
-                // 'Remarks',
-            // ],
-        ];
+        return [$this->batchNumber()];
     }
 
     /**
@@ -211,10 +175,8 @@ class CreditFile
         $this->addHeaders($f);
         foreach ($this->rows as $row) {
             /** @var \Dmn\Lbp\CreditFile\Row $row */
-            fputcsv($f, $row->getCsvRow(), $this->separator);
+            $this->addLine($f, $row->getCsvRow());
         }
-
-        // fputcsv($f, [null, null, $this->recordHash], $this->separator);
 
         $this->addFooter($f);
 
@@ -249,9 +211,7 @@ class CreditFile
      */
     protected function addHeaders(&$f): void
     {
-        foreach ($this->headers() as $header) {
-            fputcsv($f, $header, $this->separator);
-        }
+        $this->addLine($f, $this->headers());
     }
 
     /**
@@ -262,7 +222,11 @@ class CreditFile
      */
     protected function addFooter(&$f): void
     {
-        // fputcsv($f, [null], $this->separator);
-        fputcsv($f, $this->footerValue(), $this->separator);
+        $this->addLine($f, $this->footerValue());
+    }
+
+    protected function addLine(&$f, array $data): void
+    {
+        fputs($f, implode('|', $data) . "\r\n");
     }
 }
