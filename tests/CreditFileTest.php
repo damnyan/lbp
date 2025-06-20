@@ -16,6 +16,276 @@ use PHPUnit\Framework\TestCase;
 
 class CreditFileTest extends TestCase
 {
+    protected function tr1(): Row
+    {
+        $row = new Row();
+        $row->agencyReferenceNumber = '128';
+        $row->transactionType = TransactionType::CREDIT_TO_CREDITORS;
+        $row->timestamp = new DateTime('2025-06-17 00:00:00');
+        $row->settlementType = SettlementType::CREDIT_TO_LANDBANK_PHP;
+        $row->targetCreditingApplication = TargetCreditingApplication::LANDBANK;
+        $row->destinationBankCode = BankCode::LANDBANK_OF_THE_PHILIPPINES;
+        $row->sourceAccountNumber = '3402105398';
+        $row->receiversAccountNumber = '3302104637';
+        $row->merchantBillerCode = '0021';
+        $row->merchantReferenceNumber = null;
+        $row->transactionAmount = 2059;
+        $row->remittersLastName = 'LANDBANK OF THE PHILIPPINES';
+        $row->remittersFirstName = 'NULL';
+        $row->remittersMiddleName = 'NULL';
+        $row->remittersAddress = 'LANDBANK Plaza 1598 MH del Pilar Dr J Quintos St Malate Manila';
+        $row->receiversLastName = 'CITY GOVERNMENT OF CAUAYAN';
+        $row->receiversFirstName = 'NULL';
+        $row->receiversMiddleName = 'NULL';
+        $row->receiversAddress = '107 CITY HALL RIZAL AVE DISTRICT 3';
+        $row->receiversCity = 'CAUAYAN CITY';
+        $row->receiversProvince = 'ISABELA';
+        $row->organizationCode = 'LGU';
+        $row->currencyCode = CurrencyCode::PHP;
+        $row->emailAddress = 'galasanayjane2@gmail.com';
+        $row->customerType = CustomerType::INDIVIDUAL;
+        return $row;
+    }
+    protected function tr2(): Row
+    {
+        $row = new Row();
+        $row->agencyReferenceNumber = '149';
+        $row->transactionType = TransactionType::CREDIT_TO_CREDITORS;
+        $row->timestamp = new DateTime('2025-06-17 00:00:00');
+        $row->settlementType = SettlementType::CREDIT_TO_LANDBANK_PHP;
+        $row->targetCreditingApplication = TargetCreditingApplication::LANDBANK;
+        $row->destinationBankCode = BankCode::LANDBANK_OF_THE_PHILIPPINES;
+        $row->sourceAccountNumber = '3402105398';
+        $row->receiversAccountNumber = '4222100440';
+        $row->merchantBillerCode = '0021';
+        $row->merchantReferenceNumber = null;
+        $row->transactionAmount = 5015;
+        $row->remittersLastName = 'LANDBANK';
+        $row->remittersFirstName = 'LBP';
+        $row->remittersMiddleName = null;
+        $row->remittersAddress = 'Makati City';
+        $row->receiversLastName = 'JANE1';
+        $row->receiversFirstName = 'JANE';
+        $row->receiversMiddleName = 'LBCS';
+        $row->receiversAddress = 'Pedro Gil';
+        $row->receiversCity = 'Manila City';
+        $row->receiversProvince = 'Metro Manila';
+        $row->organizationCode = OrganizationCode::LANDBANK;
+        $row->currencyCode = CurrencyCode::PHP;
+        $row->emailAddress = 'galasanayjane2@gmail.com';
+        $row->customerType = CustomerType::INDIVIDUAL;
+        return $row;
+    }
+    protected function tr3(): Row
+    {
+        $row = new Row();
+        $row->agencyReferenceNumber = '156';
+        $row->transactionType = TransactionType::CREDIT_TO_CREDITORS;
+        $row->timestamp = new DateTime('2025-06-17 00:00:00');
+        $row->settlementType = SettlementType::CREDIT_TO_LANDBANK_PHP;
+        $row->targetCreditingApplication = TargetCreditingApplication::LANDBANK;
+        $row->destinationBankCode = BankCode::LANDBANK_OF_THE_PHILIPPINES;
+        $row->sourceAccountNumber = '3402105398';
+        $row->receiversAccountNumber = '0532100380';
+        $row->merchantBillerCode = '0021';
+        $row->merchantReferenceNumber = null;
+        $row->transactionAmount = 1;
+        $row->remittersLastName = 'LANDBANK';
+        $row->remittersFirstName = 'LBP';
+        $row->remittersMiddleName = null;
+        $row->remittersAddress = 'Makati City';
+        $row->receiversLastName = 'JANE1';
+        $row->receiversFirstName = 'JANE';
+        $row->receiversMiddleName = 'LBCS';
+        $row->receiversAddress = 'Pedro Gil';
+        $row->receiversCity = 'Manila City';
+        $row->receiversProvince = 'Metro Manila';
+        $row->organizationCode = OrganizationCode::LANDBANK;
+        $row->currencyCode = CurrencyCode::PHP;
+        $row->emailAddress = 'galasanayjane2@gmail.com';
+        $row->customerType = CustomerType::INDIVIDUAL;
+        return $row;
+    }
+    protected function tr4(): Row
+    {
+        $row = new Row();
+        $row->agencyReferenceNumber = '171';
+        $row->transactionType = TransactionType::CREDIT_TO_CREDITORS;
+        $row->timestamp = new DateTime('2025-06-17 00:00:00');
+        $row->settlementType = SettlementType::CREDIT_TO_LANDBANK_PHP;
+        $row->targetCreditingApplication = TargetCreditingApplication::LANDBANK;
+        $row->destinationBankCode = BankCode::LANDBANK_OF_THE_PHILIPPINES;
+        $row->sourceAccountNumber = '3402105398';
+        $row->receiversAccountNumber = '1312101242';
+        $row->merchantBillerCode = '0021';
+        $row->merchantReferenceNumber = null;
+        $row->transactionAmount = 13242;
+        $row->remittersLastName = 'LANDBANK';
+        $row->remittersFirstName = 'LBP';
+        $row->remittersMiddleName = null;
+        $row->remittersAddress = 'Makati City';
+        $row->receiversLastName = 'JANE1';
+        $row->receiversFirstName = 'JANE';
+        $row->receiversMiddleName = 'LBCS';
+        $row->receiversAddress = 'Pedro Gil';
+        $row->receiversCity = 'Manila City';
+        $row->receiversProvince = 'Metro Manila';
+        $row->organizationCode = OrganizationCode::LANDBANK;
+        $row->currencyCode = CurrencyCode::PHP;
+        $row->emailAddress = 'galasanayjane2@gmail.com';
+        $row->customerType = CustomerType::INDIVIDUAL;
+        return $row;
+    }
+    protected function tr5(): Row
+    {
+        $row = new Row();
+        $row->agencyReferenceNumber = '183';
+        $row->transactionType = TransactionType::CREDIT_TO_CREDITORS;
+        $row->timestamp = new DateTime('2025-06-17 00:00:00');
+        $row->settlementType = SettlementType::CREDIT_TO_LANDBANK_PHP;
+        $row->targetCreditingApplication = TargetCreditingApplication::LANDBANK;
+        $row->destinationBankCode = BankCode::LANDBANK_OF_THE_PHILIPPINES;
+        $row->sourceAccountNumber = '3402105398';
+        $row->receiversAccountNumber = '0872102124';
+        $row->merchantBillerCode = '0021';
+        $row->merchantReferenceNumber = null;
+        $row->transactionAmount = 1019.2;
+        $row->remittersLastName = 'LANDBANK';
+        $row->remittersFirstName = 'LBP';
+        $row->remittersMiddleName = null;
+        $row->remittersAddress = 'Makati City';
+        $row->receiversLastName = 'JANE1';
+        $row->receiversFirstName = 'JANE';
+        $row->receiversMiddleName = 'LBCS';
+        $row->receiversAddress = 'Pedro Gil';
+        $row->receiversCity = 'Manila City';
+        $row->receiversProvince = 'Metro Manila';
+        $row->organizationCode = OrganizationCode::LANDBANK;
+        $row->currencyCode = CurrencyCode::PHP;
+        $row->emailAddress = 'galasanayjane2@gmail.com';
+        $row->customerType = CustomerType::INDIVIDUAL;
+        return $row;
+    }
+    protected function tr6(): Row
+    {
+        $row = new Row();
+        $row->agencyReferenceNumber = '229';
+        $row->transactionType = TransactionType::CREDIT_TO_CREDITORS;
+        $row->timestamp = new DateTime('2025-06-17 00:00:00');
+        $row->settlementType = SettlementType::CREDIT_TO_LANDBANK_PHP;
+        $row->targetCreditingApplication = TargetCreditingApplication::LANDBANK;
+        $row->destinationBankCode = BankCode::LANDBANK_OF_THE_PHILIPPINES;
+        $row->sourceAccountNumber = '3402105398';
+        $row->receiversAccountNumber = '1092101564';
+        $row->merchantBillerCode = '0021';
+        $row->merchantReferenceNumber = null;
+        $row->transactionAmount = 3415;
+        $row->remittersLastName = 'LANDBANK';
+        $row->remittersFirstName = 'LBP';
+        $row->remittersMiddleName = null;
+        $row->remittersAddress = 'Makati City';
+        $row->receiversLastName = 'JANE1';
+        $row->receiversFirstName = 'JANE';
+        $row->receiversMiddleName = 'LBCS';
+        $row->receiversAddress = 'Pedro Gil';
+        $row->receiversCity = 'Manila City';
+        $row->receiversProvince = 'Metro Manila';
+        $row->organizationCode = OrganizationCode::LANDBANK;
+        $row->currencyCode = CurrencyCode::PHP;
+        $row->emailAddress = 'galasanayjane2@gmail.com';
+        $row->customerType = CustomerType::INDIVIDUAL;
+        return $row;
+    }
+    protected function tr7(): Row
+    {
+        $row = new Row();
+        $row->agencyReferenceNumber = '240';
+        $row->transactionType = TransactionType::CREDIT_TO_CREDITORS;
+        $row->timestamp = new DateTime('2025-06-17 00:00:00');
+        $row->settlementType = SettlementType::CREDIT_TO_LANDBANK_PHP;
+        $row->targetCreditingApplication = TargetCreditingApplication::LANDBANK;
+        $row->destinationBankCode = BankCode::LANDBANK_OF_THE_PHILIPPINES;
+        $row->sourceAccountNumber = '3402105398';
+        $row->receiversAccountNumber = '0302120293';
+        $row->merchantBillerCode = '0021';
+        $row->merchantReferenceNumber = null;
+        $row->transactionAmount = 3420;
+        $row->remittersLastName = 'LANDBANK';
+        $row->remittersFirstName = 'LBP';
+        $row->remittersMiddleName = null;
+        $row->remittersAddress = 'Makati City';
+        $row->receiversLastName = 'JANE1';
+        $row->receiversFirstName = 'JANE';
+        $row->receiversMiddleName = 'LBCS';
+        $row->receiversAddress = 'Pedro Gil';
+        $row->receiversCity = 'Manila City';
+        $row->receiversProvince = 'Metro Manila';
+        $row->organizationCode = OrganizationCode::LANDBANK;
+        $row->currencyCode = CurrencyCode::PHP;
+        $row->emailAddress = 'galasanayjane2@gmail.com';
+        $row->customerType = CustomerType::INDIVIDUAL;
+        return $row;
+    }
+    protected function tr8(): Row
+    {
+        $row = new Row();
+        $row->agencyReferenceNumber = '308';
+        $row->transactionType = TransactionType::CREDIT_TO_CREDITORS;
+        $row->timestamp = new DateTime('2025-06-17 00:00:00');
+        $row->settlementType = SettlementType::CREDIT_TO_LANDBANK_PHP;
+        $row->targetCreditingApplication = TargetCreditingApplication::LANDBANK;
+        $row->destinationBankCode = BankCode::LANDBANK_OF_THE_PHILIPPINES;
+        $row->sourceAccountNumber = '3402105398';
+        $row->receiversAccountNumber = '1262146843';
+        $row->merchantBillerCode = '0021';
+        $row->merchantReferenceNumber = null;
+        $row->transactionAmount = 450;
+        $row->remittersLastName = 'LANDBANK';
+        $row->remittersFirstName = 'LBP';
+        $row->remittersMiddleName = null;
+        $row->remittersAddress = 'Makati City';
+        $row->receiversLastName = 'JANE1';
+        $row->receiversFirstName = 'JANE';
+        $row->receiversMiddleName = 'LBCS';
+        $row->receiversAddress = 'Pedro Gil';
+        $row->receiversCity = 'Manila City';
+        $row->receiversProvince = 'Metro Manila';
+        $row->organizationCode = OrganizationCode::LANDBANK;
+        $row->currencyCode = CurrencyCode::PHP;
+        $row->emailAddress = 'galasanayjane2@gmail.com';
+        $row->customerType = CustomerType::INDIVIDUAL;
+        return $row;
+    }
+    protected function tr9(): Row
+    {
+        $row = new Row();
+        $row->agencyReferenceNumber = '308';
+        $row->transactionType = TransactionType::CREDIT_TO_CREDITORS;
+        $row->timestamp = new DateTime('2025-06-17 00:00:00');
+        $row->settlementType = SettlementType::CREDIT_TO_LANDBANK_PHP;
+        $row->targetCreditingApplication = TargetCreditingApplication::LANDBANK;
+        $row->destinationBankCode = BankCode::LANDBANK_OF_THE_PHILIPPINES;
+        $row->sourceAccountNumber = '3402105398';
+        $row->receiversAccountNumber = '3462100018';
+        $row->merchantBillerCode = '0021';
+        $row->merchantReferenceNumber = null;
+        $row->transactionAmount = 14043.92;
+        $row->remittersLastName = 'LANDBANK';
+        $row->remittersFirstName = 'LBP';
+        $row->remittersMiddleName = null;
+        $row->remittersAddress = 'Makati City';
+        $row->receiversLastName = 'JANE1';
+        $row->receiversFirstName = 'JANE';
+        $row->receiversMiddleName = 'LBCS';
+        $row->receiversAddress = 'Pedro Gil';
+        $row->receiversCity = 'Manila City';
+        $row->receiversProvince = 'Metro Manila';
+        $row->organizationCode = OrganizationCode::LANDBANK;
+        $row->currencyCode = CurrencyCode::PHP;
+        $row->emailAddress = 'galasanayjane2@gmail.com';
+        $row->customerType = CustomerType::INDIVIDUAL;
+        return $row;
+    }
     /**
      * Row
      *
@@ -24,7 +294,7 @@ class CreditFileTest extends TestCase
     protected function generateRow1(): Row
     {
         $row = new Row();
-        $row->agencyReferenceNumber = 'LBPT001722444438';
+        $row->agencyReferenceNumber = 'MTN';
         $row->transactionType = TransactionType::CREDIT_TO_CREDITORS;
         $row->timestamp = new DateTime('2023-05-18 07:30:00');
         $row->settlementType = SettlementType::CREDIT_TO_LANDBANK_PHP;
@@ -122,6 +392,15 @@ class CreditFileTest extends TestCase
     {
         $date = (new DateTime())->modify('+1 day');
         $creditFile = new CreditFile('00xx', 'LBP1234567890', 1, './storage/');
+        // $creditFile->addRow($this->tr1());
+        // $creditFile->addRow($this->tr2());
+        // $creditFile->addRow($this->tr3());
+        // $creditFile->addRow($this->tr4());
+        // $creditFile->addRow($this->tr5());
+        // $creditFile->addRow($this->tr6());
+        // $creditFile->addRow($this->tr7());
+        // $creditFile->addRow($this->tr8());
+        // $creditFile->addRow($this->tr9());
         $creditFile->addRow($this->generateRow1());
         $creditFile->addRows($this->generateRow2());
         $creditFile->setSequenceNumber(2);

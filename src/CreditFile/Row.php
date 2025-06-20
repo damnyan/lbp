@@ -118,7 +118,10 @@ class Row
      */
     protected function generateRecordHash(): void
     {
-        $this->recordHash = ($this->transactionAmount * 100)
+        $transactionAmount = $this->transactionAmount;
+        $transactionAmount = (float) number_format($transactionAmount, 2, '.', '');
+
+        $this->recordHash = ($transactionAmount * 100)
             * (
                 (int) substr($this->sourceAccountNumber, strlen($this->sourceAccountNumber) - 6)
                 + (int) substr($this->receiversAccountNumber, strlen($this->receiversAccountNumber) -6)
