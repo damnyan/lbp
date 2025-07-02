@@ -121,7 +121,7 @@ class Row
         $transactionAmount = $this->transactionAmount;
         $transactionAmount = (float) number_format($transactionAmount, 2, '.', '');
 
-        $this->recordHash = ($transactionAmount * 100)
+        $this->recordHash = round(($transactionAmount * 100), 2)
             * (
                 (int) substr($this->sourceAccountNumber, strlen($this->sourceAccountNumber) - 6)
                 + (int) substr($this->receiversAccountNumber, strlen($this->receiversAccountNumber) -6)

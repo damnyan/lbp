@@ -412,4 +412,91 @@ class CreditFileTest extends TestCase
         $this->assertFileExists($creditFile->getZipFilePath());
         $this->assertCount(2, $creditFile->getRows());
     }
+
+    /**
+     * @test
+     * @testdox Investigate
+     *
+     * @return void
+     */
+    public function investigate(): void
+    {
+        $date = (new DateTime())->modify('+1 day');
+        $creditFile = new CreditFile('00xx', 'LBP1234567890', 1, './storage/');
+        $file = __DIR__ . '/investigate_files/0021_20250619000330.txt';
+        $rowCount = 0;
+        if (($handle = fopen($file, "r")) !== FALSE) {
+            while (($data = fgetcsv($handle, 1000, "|")) !== FALSE) {
+                $rowCount ++;
+                if ($rowCount === 1 ) {
+                    continue;
+                }
+                if (count($data) < 32) {
+                    break;
+                }
+                $row = $this->generateCustomRow(
+                    $data[0],
+                    $data[1],
+                    new DateTime(),
+                    $data[7],
+                    $data[8],
+                    $data[11],
+                );
+                // echo $rowCount;echo "\n";
+                $creditFile->addRow($row);
+            }
+            fclose($handle);
+        }
+        $creditFile->setSequenceNumber(2);
+        $creditFile->setDate($date);
+
+        $filePath = $creditFile->generate();
+        $this->assertFileExists($filePath);
+        $this->assertFileExists($creditFile->getRawFilePath());
+        $this->assertFileExists($creditFile->getZipFilePath());
+    }
+
+    /**
+     * Row
+     *
+     * @return Row
+     */
+    protected function generateCustomRow(
+        string $agencyRefernceNumber,
+        string $transactionType,
+        DateTime $timestamp,
+        string $sourceAccountNumber,
+        string $receiverAccountNumber,
+        string $amount,
+    ): Row
+    {
+        $row = new Row();
+        $row->agencyReferenceNumber = $agencyRefernceNumber;
+        $row->transactionType = $transactionType;
+        $row->timestamp = $timestamp;
+        $row->settlementType = SettlementType::CREDIT_TO_LANDBANK_PHP;
+        $row->targetCreditingApplication = TargetCreditingApplication::LANDBANK;
+        $row->destinationBankCode = BankCode::LANDBANK_OF_THE_PHILIPPINES;
+        $row->sourceAccountNumber = $sourceAccountNumber;
+        $row->receiversAccountNumber = $receiverAccountNumber;
+        $row->merchantBillerCode = '0021';
+        $row->merchantReferenceNumber = null;
+        $row->transactionAmount = $amount;
+        $row->remittersLastName = 'LANDBANK';
+        $row->remittersFirstName = 'LBP';
+        $row->remittersMiddleName = null;
+        $row->remittersAddress = 'Malate Manila';
+        $row->receiversLastName = 'JANE2';
+        $row->receiversFirstName = 'JANE';
+        $row->receiversMiddleName = 'LBCS';
+        $row->receiversAddress = 'Maria Orosa';
+        $row->receiversCity = 'Manila City';
+        $row->receiversProvince = 'Metro Manila';
+        $row->organizationCode = OrganizationCode::LANDBANK;
+        $row->currencyCode = CurrencyCode::PHP;
+        $row->emailAddress = 'galasanayjane2@gmail.com';
+        $row->customerType = CustomerType::INDIVIDUAL;
+
+        return $row;
+    }
 }
