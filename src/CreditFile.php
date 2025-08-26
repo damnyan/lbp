@@ -16,7 +16,7 @@ class CreditFile
 
     protected int $rowCount = 0;
 
-    protected float $totalTransactionAmount = 0;
+    protected int $totalTransactionAmount = 0;
 
     protected string|null $rawFilePath = null;
     protected string|null $zipFilePath = null;
@@ -99,7 +99,10 @@ class CreditFile
         $this->previousCumulativeHash = $row->getCumulativeHash();
         $this->recordHash = $this->recordHash + $row->getRecordHash();
         $this->rowCount++;
-        $this->totalTransactionAmount = $this->totalTransactionAmount + $row->getTransactionAmount();
+
+        // OLD: $this->totalTransactionAmount = $this->totalTransactionAmount + $row->getTransactionAmount();
+        $transactionAmount = $this->toCents($row->getTransactionAmount());
+        $this->totalTransactionAmount = $this->totalTransactionAmount + $transactionAmount;
 
         array_push($this->rows, $row);
     }
@@ -136,7 +139,7 @@ class CreditFile
     {
         return [
             $this->rowCount,
-            $this->totalTransactionAmount,
+            $this->centsToString($this->totalTransactionAmount), // FIXED: Convert back to decimal string
             $this->recordHash
         ];
     }
@@ -228,5 +231,23 @@ class CreditFile
     protected function addLine(&$f, array $data): void
     {
         fputs($f, implode('|', $data) . "\r\n");
+    }
+
+    /**
+     * ADDED: Convert decimal amount to integer cents using BCMath for precision
+     */
+    private function toCents($amount): int
+    {
+        return (int) bcmul((string)$amount, '100', 0);
+    }
+
+    /**
+     * ADDED: Convert integer cents to decimal string with exactly 2 decimal places
+     */
+    private function centsToString(int $cents): string
+    {
+        $pesos = intdiv($cents, 100);
+        $cent  = $cents % 100;
+        return $pesos . '.' . str_pad((string)$cent, 2, '0', STR_PAD_LEFT);
     }
 }
